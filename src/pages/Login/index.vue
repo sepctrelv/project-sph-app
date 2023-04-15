@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "SphLogin",
+  name: "LoginPage",
 };
 </script>
 

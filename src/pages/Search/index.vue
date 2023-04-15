@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "SphSearch",
+  name: "SearchPage",
   // 路由组件可以传递props
   props: ["keyword", "k"],
 };

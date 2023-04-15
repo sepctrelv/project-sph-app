@@ -38,8 +38,7 @@
 <script>
 import SearchBar from "@/components/Header/SearchBar.vue";
 export default {
-  name: "SphHeader",
-
+  name: "TheHeader",
   components: { SearchBar },
 };
 </script>

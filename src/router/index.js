@@ -7,10 +7,10 @@ import VueRouter from "vue-router";
 // 使用插件
 Vue.use(VueRouter);
 // 引入路由组件
-import Home from "@/pages/Home";
-import Search from "@/pages/Search";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
+import HomePage from "@/pages/Home";
+import SearchPage from "@/pages/Search";
+import LoginPage from "@/pages/Login";
+import RegisterPage from "@/pages/Register";
 // 先把VueRouter原型对象的push，先保存一份
 const { push: originPush, replace: originReplace } = VueRouter.prototype;
 
@@ -58,7 +58,7 @@ export default new VueRouter({
   routes: [
     {
       path: "/home",
-      component: Home,
+      component: HomePage,
       meta: {
         showFooter: true,
         showSearchBar: true,
@@ -67,7 +67,7 @@ export default new VueRouter({
     {
       name: "search",
       path: "/search/:keyword?",
-      component: Search,
+      component: SearchPage,
       meta: {
         showFooter: true,
         showSearchBar: true,
@@ -85,11 +85,11 @@ export default new VueRouter({
     },
     {
       path: "/login",
-      component: Login,
+      component: LoginPage,
     },
     {
       path: "/register",
-      component: Register,
+      component: RegisterPage,
     },
     // 重定向，在项目跑起来的时候，访问/，立马定向到首页
     {

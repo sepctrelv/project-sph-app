@@ -11,7 +11,7 @@
 import FooterList from "@/components/Footer/FooterList.vue";
 import FooterCopyright from "@/components/Footer/FooterCopyright.vue";
 export default {
-  name: "SphFooter",
+  name: "TheFooter",
   components: { FooterList, FooterCopyright },
 };
 </script>
