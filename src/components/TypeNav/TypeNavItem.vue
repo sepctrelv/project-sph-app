@@ -1,21 +1,21 @@
 <template>
-  <div class="item">
+  <div class="item" @mouseenter="changeIndex(index)" @mouseleave="removeIndex">
     <h3>
-      <a href="">{{ item.title }}</a>
+      <a href="">{{ category.categoryName }}</a>
     </h3>
     <div class="item-list clearfix">
-      <div class="sub-item">
-        <dl
-          class="fore"
-          v-for="subItem in item.subItems"
-          :key="subItem.category"
-        >
+      <div
+        class="sub-item"
+        v-for="c2 in category.categoryChild"
+        :key="c2.categoryId"
+      >
+        <dl class="fore">
           <dt>
-            <a href="">{{ subItem.category }}</a>
+            <a href="">{{ c2.categoryName }}</a>
           </dt>
           <dd>
-            <em v-for="(list, index) in subItem.lists" :key="index">
-              <a href="">{{ list }}</a>
+            <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+              <a href="">{{ c3.categoryName }}</a>
             </em>
           </dd>
         </dl>
@@ -27,14 +27,29 @@
 <script>
 export default {
   name: "TypeNavItem",
-  props: ["item"],
+  props: ["category", "index"],
+  methods: {
+    changeIndex(index) {
+      this.$emit("changeIndex", index);
+    },
+    removeIndex() {
+      this.$emit("removeIndex");
+    },
+  },
 };
 </script>
 
 <style scoped lang="less">
 .item {
+  height: 27px;
+  transition: background-color 0.15s;
+
+  &.current {
+    background-color: #d9d9d9;
+  }
+
   h3 {
-    line-height: 30px;
+    line-height: 27px;
     font-size: 14px;
     font-weight: 400;
     overflow: hidden;
@@ -73,18 +88,28 @@ export default {
         }
 
         dt {
+          position: relative;
           float: left;
-          width: 54px;
+          width: 70px;
           line-height: 22px;
           text-align: right;
           padding: 3px 6px 0 0;
+          margin-right: 14px;
           font-weight: 700;
+
+          &::after {
+            content: ">";
+            position: absolute;
+            right: -10px;
+            color: #666;
+          }
         }
 
         dd {
-          float: left;
-          width: 415px;
-          padding: 3px 0 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          padding: 8px 0 0;
           overflow: hidden;
 
           em {
@@ -92,8 +117,6 @@ export default {
             height: 14px;
             line-height: 14px;
             padding: 0 8px;
-            margin-top: 5px;
-            border-left: 1px solid #ccc;
           }
         }
       }
