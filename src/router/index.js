@@ -57,7 +57,7 @@ export default new VueRouter({
   mode: "history",
   routes: [
     {
-      path: "/home",
+      path: "/",
       component: HomePage,
       meta: {
         showFooter: true,
@@ -80,7 +80,6 @@ export default new VueRouter({
       // 函数写法：可以params参数、query参数，通过props传递给路由组件
       props: ($route) => ({
         keyword: $route.params.keyword,
-        k: $route.query.k,
       }),
     },
     {
@@ -94,7 +93,7 @@ export default new VueRouter({
     // 重定向，在项目跑起来的时候，访问/，立马定向到首页
     {
       path: "*",
-      redirect: "/home",
+      redirect: "/",
     },
   ],
 });

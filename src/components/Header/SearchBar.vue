@@ -5,7 +5,7 @@
         type="text"
         id="autocomplete"
         class="input-error input-xxlarge"
-        v-model="keyword"
+        v-model.trim="keyword"
       />
       <button
         class="sui-btn btn-xlarge btn-danger"
@@ -29,20 +29,12 @@ export default {
   methods: {
     // 搜索按钮的回调函数: 需要向Search路由进行跳转
     goSearch() {
-      // 路由传递参数:
-      // 第一种：字符串
-      /*this.$router.push(
-        `/search/${this.keyword}?k=${this.keyword.toUpperCase()}`
-      );*/
-      // 第二种：对象
+      if (!this.keyword) return;
+
       this.$router.push({
         name: "search",
-        params: {
-          keyword: this.keyword || undefined,
-        },
-        query: {
-          k: this.keyword.toUpperCase(),
-        },
+        params: { keyword: this.keyword || undefined },
+        query: this.$route.query,
       });
     },
   },

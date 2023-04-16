@@ -1,22 +1,41 @@
-import { reqCategoryList } from "@/api";
+import { reqGetCategoryList, reqGetBannerList, reqGetFloorList } from "@/api";
 
 const state = {
   categoryList: [],
+  bannerList: [],
+  floorList: [],
 };
 const getters = {};
 const actions = {
   // 通过API里面的接口函数调用，向服务器发请求，获取服务器的数据
-  async categoryList({ commit }) {
-    let result = await reqCategoryList();
+  async getBaseCategoryList({ commit }) {
+    let result = await reqGetCategoryList();
     if (result.code === 200) {
-      commit("CATEGORY_LIST", result.data);
+      commit("RECEIVE_BASE_CATEGORY_LIST", result.data);
     }
-    console.log(result);
+  },
+  async getBannerList({ commit }) {
+    let result = await reqGetBannerList();
+    if (result.code === 200) {
+      commit("RECEIVE_BANNER_LIST", result.data);
+    }
+  },
+  async getFloorList({ commit }) {
+    let result = await reqGetFloorList();
+    if (result.code === 200) {
+      commit("RECEIVE_FLOOR_LIST", result.data);
+    }
   },
 };
 const mutations = {
-  CATEGORY_LIST(state, categoryList) {
+  RECEIVE_BASE_CATEGORY_LIST(state, categoryList) {
     state.categoryList = categoryList;
+  },
+  RECEIVE_BANNER_LIST(state, bannerList) {
+    state.bannerList = bannerList;
+  },
+  RECEIVE_FLOOR_LIST(state, floorList) {
+    state.floorList = floorList;
   },
 };
 

@@ -3,19 +3,14 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper" id="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" alt="Banner1" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner2.jpg" alt="Banner2" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner3.jpg" alt="Banner3" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner4.jpg" alt="Banner4" />
+            <div
+              class="swiper-slide"
+              v-for="carousel in bannerList"
+              :key="carousel.id"
+            >
+              <img :src="carousel.imgUrl" alt="Banner" />
             </div>
           </div>
           <!-- 如果需要分页器 -->
@@ -33,7 +28,7 @@
             <span class="fr tip">更多 ></span>
           </h4>
           <div class="clearfix"></div>
-          <ul class="news-list unstyled">
+          <ul class="news-list">
             <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
             <li><span class="bold">[公告]</span>备战开学季 全民半价购数码</li>
             <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
@@ -51,11 +46,39 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import Swiper from "swiper/bundle";
+
 import LifeService from "@/pages/Home/ListContainer/LifeService.vue";
 
 export default {
   name: "ListContainer",
   components: { LifeService },
+  computed: {
+    ...mapState({
+      bannerList: (state) => state.home.bannerList,
+    }),
+  },
+  watch: {
+    bannerList() {
+      this.$nextTick(() => {
+        new Swiper("#mySwiper", {
+          loop: true,
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+          },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+        });
+      });
+    },
+  },
+  mounted() {
+    this.$store.dispatch("getBannerList");
+  },
 };
 </script>
 
@@ -74,7 +97,7 @@ export default {
       height: 100%;
       padding: 5px;
       float: left;
-      overflow: hidden;
+      //overflow: hidden;
     }
 
     .right {

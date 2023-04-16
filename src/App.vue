@@ -17,6 +17,10 @@ export default {
     TheHeader,
     TheFooter,
   },
+  mounted() {
+    // 通知Vuex发请求，获取数据，存储与仓库当中
+    this.$store.dispatch("getBaseCategoryList");
+  },
 };
 </script>
 

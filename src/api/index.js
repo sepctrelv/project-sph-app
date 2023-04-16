@@ -3,7 +3,8 @@
  * 当前这个模块：API进行统一管理
  * ------------------------------
  */
-import requests from "@/api/request";
+import service from "@/api/service";
+import mockService from "@/api/mockService";
 
 /**
  * 三级联动接口
@@ -11,8 +12,9 @@ import requests from "@/api/request";
  * get请求
  * 无参数
  */
-export const reqCategoryList = () =>
-  requests({
-    url: "/product/getBaseCategoryList",
-    method: "get",
-  });
+export const reqGetCategoryList = () =>
+  service.get("/product/getBaseCategoryList");
+
+export const reqGetBannerList = () => mockService.get("/banners");
+
+export const reqGetFloorList = () => mockService.get("/floors");
