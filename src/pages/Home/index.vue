@@ -2,19 +2,23 @@
   <div>
     <!--  三级联动全局组件  -->
     <TypeNav></TypeNav>
-    <ListContainer></ListContainer>
+    <HomeListContainer></HomeListContainer>
     <HomeRecommend></HomeRecommend>
     <HomeRank></HomeRank>
     <HomeLike></HomeLike>
-    <HomeFloor></HomeFloor>
-    <HomeFloor></HomeFloor>
+    <HomeFloor
+      v-for="floor in floorList"
+      :key="floor.id"
+      :list="floor"
+    ></HomeFloor>
     <HomeBrand></HomeBrand>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 // 引入其余的组件
-import ListContainer from "@/pages/Home/ListContainer";
+import HomeListContainer from "@/pages/Home/HomeListContainer";
 import HomeRecommend from "@/pages/Home/HomeRecommend";
 import HomeRank from "@/pages/Home/HomeRank";
 import HomeLike from "@/pages/Home/HomeLike";
@@ -24,12 +28,20 @@ import HomeBrand from "@/pages/Home/HomeBrand";
 export default {
   name: "HomePage",
   components: {
-    ListContainer,
+    HomeListContainer,
     HomeRecommend,
     HomeRank,
     HomeLike,
     HomeFloor,
     HomeBrand,
+  },
+  computed: {
+    ...mapState({
+      floorList: (state) => state.home.floorList,
+    }),
+  },
+  mounted() {
+    this.$store.dispatch("getFloorList");
   },
 };
 </script>

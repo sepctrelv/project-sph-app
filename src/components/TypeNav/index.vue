@@ -285,6 +285,7 @@ export default {
       .category-item-link {
         cursor: pointer;
         &:hover {
+          color: #e1251b;
           text-decoration: underline;
         }
       }

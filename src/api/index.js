@@ -14,7 +14,7 @@ import mockService from "@/api/mockService";
  */
 export const reqGetCategoryList = () =>
   service.get("/product/getBaseCategoryList");
-
+// 获取Banner数据
 export const reqGetBannerList = () => mockService.get("/banners");
-
+// 获取Floor数据
 export const reqGetFloorList = () => mockService.get("/floors");

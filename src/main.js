@@ -6,7 +6,7 @@ import router from "@/router";
 import store from "@/store";
 // 三级联动组件---全局组件
 import TypeNav from "@/components/TypeNav";
-// 全局组件 params1 全局组件的名字 params2 要注册的组件
+// 注册全局组件 params1 全局组件的名字 params2 要注册的组件
 Vue.component(TypeNav.name, TypeNav);
 // 引入MockServer
 import "@/mock/mockServer";

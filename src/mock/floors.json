@@ -108,15 +108,15 @@
     "carouselList": [
       {
         "id": "0021",
-        "imgUrl": "/images/floor-1-b01.png"
-      },
-      {
-        "id": "0022",
         "imgUrl": "/images/floor-1-b02.png"
       },
       {
-        "id": "0023",
+        "id": "0022",
         "imgUrl": "/images/floor-1-b03.png"
+      },
+      {
+        "id": "0023",
+        "imgUrl": "/images/floor-1-b01.png"
       }
     ],
     "recommendList": [

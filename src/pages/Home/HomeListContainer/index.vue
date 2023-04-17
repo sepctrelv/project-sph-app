@@ -2,24 +2,8 @@
   <div class="list-container">
     <div class="sortList clearfix">
       <div class="center">
-        <!--banner轮播-->
-        <div class="swiper" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="carousel in bannerList"
-              :key="carousel.id"
-            >
-              <img :src="carousel.imgUrl" alt="Banner" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <!-- banner轮播 -->
+        <BannerCarousel :list="bannerList"></BannerCarousel>
       </div>
       <div class="right">
         <div class="news">
@@ -47,34 +31,16 @@
 
 <script>
 import { mapState } from "vuex";
-import Swiper from "swiper/bundle";
-
-import LifeService from "@/pages/Home/ListContainer/LifeService.vue";
+import BannerCarousel from "@/pages/Home/HomeListContainer/BannerCarousel.vue";
+import LifeService from "@/pages/Home/HomeListContainer/LifeService.vue";
 
 export default {
-  name: "ListContainer",
-  components: { LifeService },
+  name: "HomeListContainer",
+  components: { BannerCarousel, LifeService },
   computed: {
     ...mapState({
       bannerList: (state) => state.home.bannerList,
     }),
-  },
-  watch: {
-    bannerList() {
-      this.$nextTick(() => {
-        new Swiper("#mySwiper", {
-          loop: true,
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-          },
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          },
-        });
-      });
-    },
   },
   mounted() {
     this.$store.dispatch("getBannerList");
@@ -97,7 +63,7 @@ export default {
       height: 100%;
       padding: 5px;
       float: left;
-      //overflow: hidden;
+      overflow: hidden;
     }
 
     .right {

@@ -2,15 +2,15 @@
   <div class="floor">
     <div class="py-container">
       <div class="title clearfix">
-        <h3 class="fl">家用电器</h3>
+        <h3 class="fl">{{ list.name }}</h3>
         <div class="fr">
           <ul class="nav-tabs clearfix">
             <li
-              v-for="nav in navs"
-              :key="nav.title"
-              :class="nav.active ? 'active' : ''"
+              v-for="(nav, index) in list.navList"
+              :key="index"
+              :class="index === 0 ? 'active' : ''"
             >
-              <a :href="nav.link" data-toggle="tab">{{ nav.title }}</a>
+              <a :href="nav.url" data-toggle="tab">{{ nav.text }}</a>
             </li>
           </ul>
         </div>
@@ -20,50 +20,35 @@
           <div class="floor-1">
             <div class="block-gary">
               <ul class="jd-list">
-                <li v-for="list in lists" :key="list">{{ list }}</li>
+                <li v-for="(keyword, index) in list.keywords" :key="index">
+                  {{ keyword }}
+                </li>
               </ul>
-              <img src="./images/floor-1-1.png" alt="" />
+              <img :src="list.imgUrl" alt="" />
             </div>
             <div class="floorBanner">
-              <div class="swiper" id="floor1Swiper">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <img src="./images/floor-1-b01.png" alt="" />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src="./images/floor-1-b02.png" alt="" />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src="./images/floor-1-b03.png" alt="" />
-                  </div>
-                </div>
-                <!-- 如果需要分页器 -->
-                <div class="swiper-pagination"></div>
-
-                <!-- 如果需要导航按钮 -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-              </div>
+              <!-- 轮播 -->
+              <FloorCarousel :list="list.carouselList"></FloorCarousel>
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
               <div class="floor-cover-pit">
-                <img src="./images/floor-1-2.png" alt="" />
+                <img :src="list.recommendList[0]" alt="" />
               </div>
               <div class="floor-cover-pit">
-                <img src="./images/floor-1-3.png" alt="" />
+                <img :src="list.recommendList[1]" alt="" />
               </div>
             </div>
             <div class="split center">
-              <img src="./images/floor-1-4.png" alt="" />
+              <img :src="list.bigImg" alt="" />
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
               <div class="floor-cover-pit">
-                <img src="./images/floor-1-5.png" alt="" />
+                <img :src="list.recommendList[2]" alt="" />
               </div>
               <div class="floor-cover-pit">
-                <img src="./images/floor-1-6.png" alt="" />
+                <img :src="list.recommendList[3]" alt="" />
               </div>
             </div>
           </div>
@@ -74,29 +59,11 @@
 </template>
 
 <script>
+import FloorCarousel from "@/pages/Home/HomeFloor/FloorCarousel.vue";
 export default {
   name: "HomeFloor",
-  data() {
-    return {
-      navs: [
-        { link: "#tab1", title: "热门", active: true },
-        { link: "#tab2", title: "大家电", active: false },
-        { link: "#tab3", title: "生活电器", active: false },
-        { link: "#tab4", title: "厨房电器", active: false },
-        { link: "#tab5", title: "应季电器", active: false },
-        { link: "#tab6", title: "空气/净水", active: false },
-        { link: "#tab7", title: "高端电器", active: false },
-      ],
-      lists: [
-        "节能补贴",
-        "4K电视",
-        "空气净化器",
-        "IH电饭煲",
-        "滚筒洗衣机",
-        "电热水器",
-      ],
-    };
-  },
+  components: { FloorCarousel },
+  props: ["list"],
 };
 </script>
 
