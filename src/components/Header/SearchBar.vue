@@ -1,6 +1,6 @@
 <template>
   <div class="searchArea">
-    <form action="###" class="searchForm">
+    <form action="#" class="searchForm">
       <input
         type="text"
         id="autocomplete"
@@ -29,13 +29,12 @@ export default {
   methods: {
     // 搜索按钮的回调函数: 需要向Search路由进行跳转
     goSearch() {
-      if (!this.keyword) return;
-
       this.$router.push({
         name: "search",
         params: { keyword: this.keyword || undefined },
         query: this.$route.query,
       });
+      this.keyword = "";
     },
   },
 };

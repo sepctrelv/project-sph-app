@@ -24,6 +24,7 @@ export default {
       this.$nextTick(() => {
         new Swiper(this.$refs.bannerSwiper, {
           loop: true,
+          autoplay: true,
           pagination: {
             el: ".swiper-pagination",
             clickable: true,

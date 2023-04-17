@@ -38,12 +38,12 @@ export default {
   name: "HomeListContainer",
   components: { BannerCarousel, LifeService },
   computed: {
-    ...mapState({
-      bannerList: (state) => state.home.bannerList,
+    ...mapState("home", {
+      bannerList: (state) => state.bannerList,
     }),
   },
   mounted() {
-    this.$store.dispatch("getBannerList");
+    this.$store.dispatch("home/getBannerList");
   },
 };
 </script>

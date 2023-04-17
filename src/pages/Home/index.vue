@@ -36,12 +36,12 @@ export default {
     HomeBrand,
   },
   computed: {
-    ...mapState({
-      floorList: (state) => state.home.floorList,
+    ...mapState("home", {
+      floorList: (state) => state.floorList,
     }),
   },
   mounted() {
-    this.$store.dispatch("getFloorList");
+    this.$store.dispatch("home/getFloorList");
   },
 };
 </script>

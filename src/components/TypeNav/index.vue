@@ -88,8 +88,8 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      categoryList: (state) => state.home.categoryList,
+    ...mapState("home", {
+      categoryList: (state) => state.categoryList,
     }),
   },
   mounted() {
