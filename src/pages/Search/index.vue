@@ -12,38 +12,61 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <!-- 分类的面包屑 -->
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName
+              }}<i @click="removeBreadcrumbCategoryName">×</i>
+            </li>
+            <!-- 关键字的面包屑 -->
+            <li class="with-x" v-if="searchParams.keyword">
+              {{ searchParams.keyword
+              }}<i @click="removeBreadcrumbKeyword">×</i>
+            </li>
+            <!-- 品牌的面包屑 -->
+            <li class="with-x" v-if="searchParams.trademark">
+              {{ `品牌：${trademarkName}`
+              }}<i @click="removeBreadcrumbTrademark">×</i>
+            </li>
+            <!-- 平台的售卖的属性的面包屑 -->
+            <li
+              class="with-x"
+              v-for="(attr, index) in searchParams.props"
+              :key="index"
+            >
+              {{ getAttrName(attr)
+              }}<i @click="removeBreadcrumbAttrProp(index)">×</i>
+            </li>
           </ul>
         </div>
 
         <!-- selector -->
-        <SearchSelector></SearchSelector>
+        <SearchSelector
+          @setTrademark="setTrademark"
+          @addAttrProps="addAttrProps"
+        ></SearchSelector>
 
-        <!-- details -->
+        <!-- 详情 -->
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
+              <!-- 排序 -->
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <!-- 排序 ⬆ ⬇ -->
+                <li
+                  :class="{ active: isSortBase }"
+                  @click="changeSearchOrder('1')"
+                >
+                  <a
+                    >综合<span v-show="isSortBase">{{ sortArrow }}</span></a
+                  >
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li
+                  :class="{ active: isSortPrice }"
+                  @click="changeSearchOrder('2')"
+                >
+                  <a
+                    >价格<span v-show="isSortPrice">{{ sortArrow }}</span></a
+                  >
                 </li>
               </ul>
             </div>
@@ -137,7 +160,7 @@ export default {
         category3Id: "",
         categoryName: "",
         keyword: "",
-        order: "",
+        order: "1:desc",
         pageNo: 1,
         pageSize: 10,
         props: [],
@@ -147,9 +170,29 @@ export default {
   },
   computed: {
     ...mapGetters("search", ["goodsList"]),
+    trademarkName() {
+      return this.searchParams.trademark
+        ? this.searchParams.trademark.split(":")[1]
+        : "";
+    },
+    isSortBase() {
+      return this.searchParams.order.indexOf("1") !== -1;
+    },
+    isSortPrice() {
+      return this.searchParams.order.indexOf("2") !== -1;
+    },
+    sortArrow() {
+      return this.searchParams.order.indexOf("asc") === -1 ? "⬇" : "⬆";
+    },
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.updateSearchParams(to);
+    this.getSearchData();
+    this.resetSearchId(false);
+    next();
   },
   beforeMount() {
-    Object.assign(this.searchParams, this.$route.query, this.$route.params);
+    this.updateSearchParams(this.$route);
   },
   mounted() {
     this.getSearchData();
@@ -159,12 +202,85 @@ export default {
     getSearchData() {
       this.$store.dispatch("search/getSearchList", this.searchParams);
     },
-    setTrademark(trademark) {
-      this.searchParams.trademark = trademark;
+    // 更新searchParams
+    updateSearchParams($route) {
+      Object.assign(this.searchParams, $route.query, $route.params);
     },
-    addProps(id, value, name) {
-      const prop = `${id}:${value}:${name}`;
-      console.log(prop);
+    // 重置搜索id
+    resetSearchId(clearAll = true) {
+      const query = this.$route.query;
+      if (clearAll) {
+        this.searchParams.category1Id = "";
+        this.searchParams.category2Id = "";
+        this.searchParams.category3Id = "";
+      } else {
+        if (query.category1Id) {
+          this.searchParams.category2Id = "";
+          this.searchParams.category3Id = "";
+        } else if (query.category2Id) {
+          this.searchParams.category1Id = "";
+          this.searchParams.category3Id = "";
+        } else if (query.category3Id) {
+          this.searchParams.category1Id = "";
+          this.searchParams.category2Id = "";
+        }
+      }
+    },
+    // 删除分类名
+    removeBreadcrumbCategoryName() {
+      this.searchParams.categoryName = "";
+      this.resetSearchId();
+      this.$router.push({ name: "search", params: this.$route.params });
+    },
+    // 删除关键字
+    removeBreadcrumbKeyword() {
+      this.searchParams.keyword = "";
+      // 通知Header / SearchBar清除关键字
+      this.$bus.$emit("clearKeyword");
+      this.$router.push({ name: "search", query: this.$route.query });
+    },
+    // 设置品牌
+    setTrademark(trademark) {
+      const trademarkInfo = `${trademark.tmId}:${trademark.tmName}`;
+      if (this.searchParams.trademark !== trademarkInfo) {
+        this.searchParams.trademark = trademarkInfo;
+        this.getSearchData();
+      }
+    },
+    // 删除品牌
+    removeBreadcrumbTrademark() {
+      this.searchParams.trademark = "";
+      this.getSearchData();
+    },
+    // 添加售卖属性
+    addAttrProps(attr, attrValue) {
+      const attrProp = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+      if (this.searchParams.props.indexOf(attrProp) === -1) {
+        this.searchParams.props.push(attrProp);
+        this.getSearchData();
+      }
+    },
+    // 获取面包屑属性名
+    getAttrName(attr) {
+      return `${attr.split(":")[2]}：${attr.split(":")[1]}`;
+    },
+    // 删除售卖属性
+    removeBreadcrumbAttrProp(index) {
+      this.searchParams.props.splice(index, 1);
+      this.getSearchData();
+    },
+    // 排序
+    changeSearchOrder(flag) {
+      let [originFlag, originSort] = this.searchParams.order.split(":");
+      if (originFlag === flag) {
+        originSort = originSort === "asc" ? "desc" : "asc";
+      } else {
+        originFlag = flag;
+        originSort = "desc";
+      }
+
+      this.searchParams.order = [originFlag, originSort].join(":");
+      this.getSearchData();
     },
   },
 };
@@ -234,7 +350,6 @@ export default {
             font: 400 14px tahoma;
             display: inline-block;
             height: 100%;
-            vertical-align: middle;
           }
 
           &:hover {

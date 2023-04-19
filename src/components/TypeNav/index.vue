@@ -116,8 +116,8 @@ export default {
         // 如果路由跳转的时候，带有params参数，要一起传递过去
         this.$router.push({
           name: "search",
-          params: this.$route.params,
           query,
+          params: this.$route.params,
         });
       }
     },

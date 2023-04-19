@@ -16,6 +16,9 @@ Vue.config.productionTip = false;
 
 new Vue({
   render: (h) => h(App),
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
   // 注册路由
   router,
   // 注册仓库: 组件实例的身上会多了一个属性$store属性
