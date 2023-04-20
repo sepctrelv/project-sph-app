@@ -110,7 +110,13 @@
             </ul>
           </div>
           <!-- 分页 -->
-          <ThePagination></ThePagination>
+          <ThePagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @currentChange="currentChange"
+          ></ThePagination>
         </div>
       </div>
     </div>
@@ -118,7 +124,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import SearchSelector from "@/pages/Search/SearchSelector/index.vue";
 export default {
   name: "SearchPage",
@@ -141,6 +147,9 @@ export default {
   },
   computed: {
     ...mapGetters("search", ["goodsList"]),
+    ...mapState("search", {
+      total: (state) => state.searchList.total,
+    }),
     trademarkName() {
       return this.searchParams.trademark
         ? this.searchParams.trademark.split(":")[1]
@@ -157,9 +166,9 @@ export default {
     },
   },
   beforeRouteUpdate(to, from, next) {
+    this.resetSearchId();
     this.updateSearchParams(to);
     this.getSearchData();
-    this.resetSearchId(false);
     next();
   },
   beforeMount() {
@@ -178,24 +187,10 @@ export default {
       Object.assign(this.searchParams, $route.query, $route.params);
     },
     // 重置搜索id
-    resetSearchId(clearAll = true) {
-      const query = this.$route.query;
-      if (clearAll) {
-        this.searchParams.category1Id = "";
-        this.searchParams.category2Id = "";
-        this.searchParams.category3Id = "";
-      } else {
-        if (query.category1Id) {
-          this.searchParams.category2Id = "";
-          this.searchParams.category3Id = "";
-        } else if (query.category2Id) {
-          this.searchParams.category1Id = "";
-          this.searchParams.category3Id = "";
-        } else if (query.category3Id) {
-          this.searchParams.category1Id = "";
-          this.searchParams.category2Id = "";
-        }
-      }
+    resetSearchId() {
+      this.searchParams.category1Id = "";
+      this.searchParams.category2Id = "";
+      this.searchParams.category3Id = "";
     },
     // 删除分类名
     removeBreadcrumbCategoryName() {
@@ -251,6 +246,10 @@ export default {
       }
 
       this.searchParams.order = [originFlag, originSort].join(":");
+      this.getSearchData();
+    },
+    currentChange(page) {
+      this.searchParams.pageNo = page;
       this.getSearchData();
     },
   },

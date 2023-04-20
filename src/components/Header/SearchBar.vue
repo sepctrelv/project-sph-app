@@ -35,11 +35,28 @@ export default {
   methods: {
     // 搜索按钮的回调函数: 需要向Search路由进行跳转
     goSearch() {
-      this.$router.push({
-        name: "search",
-        params: { keyword: this.keyword || undefined },
-        query: this.$route.query,
-      });
+      const { path, query } = this.$route;
+
+      if (this.keyword) {
+        if (path.indexOf("/search") === 0) {
+          this.$router.push({
+            name: "search",
+            params: { keyword: this.keyword },
+            query,
+          });
+        } else {
+          this.$router.push({
+            name: "search",
+            params: { keyword: this.keyword },
+          });
+        }
+      } else {
+        if (path.indexOf("/search") === 0) {
+          this.$router.push({ name: "search", query });
+        } else {
+          this.$router.push({ name: "search" });
+        }
+      }
     },
   },
 };

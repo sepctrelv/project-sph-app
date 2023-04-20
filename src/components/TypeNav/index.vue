@@ -113,12 +113,19 @@ export default {
         } else if (category3Id) {
           query.category3Id = category3Id;
         }
+
+        this.hideCategories();
         // 如果路由跳转的时候，带有params参数，要一起传递过去
-        this.$router.push({
-          name: "search",
-          query,
-          params: this.$route.params,
-        });
+        const { path, params } = this.$route;
+        if (path.indexOf("/search") === 0) {
+          this.$router.push({
+            name: "search",
+            params,
+            query,
+          });
+        } else {
+          this.$router.push({ name: "search", query });
+        }
       }
     },
     showCategories() {
