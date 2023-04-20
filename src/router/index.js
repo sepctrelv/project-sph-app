@@ -4,13 +4,11 @@
 
 import Vue from "vue";
 import VueRouter from "vue-router";
+import routes from "./routes.js";
+
 // 使用插件
 Vue.use(VueRouter);
-// 引入路由组件
-import HomePage from "@/pages/Home/index.vue";
-import SearchPage from "@/pages/Search/index.vue";
-import LoginPage from "@/pages/Login/index.vue";
-import RegisterPage from "@/pages/Register/index.vue";
+
 // 先把VueRouter原型对象的push，先保存一份
 const { push: originPush, replace: originReplace } = VueRouter.prototype;
 
@@ -55,45 +53,12 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 // 配置路由
 export default new VueRouter({
   mode: "history",
-  routes: [
-    {
-      path: "/",
-      component: HomePage,
-      meta: {
-        showFooter: true,
-        showSearchBar: true,
-      },
-    },
-    {
-      name: "search",
-      path: "/search/:keyword?",
-      component: SearchPage,
-      meta: {
-        showFooter: true,
-        showSearchBar: true,
-      },
-      // 路由组件能不能传递props数据？
-      // 第一种：布尔值写法: 只能传递params参数
-      // props: true,
-      // 第二种：对象写法: 额外的给路由组件传递一些props
-      // props: { a: 1, b: 2 },
-      // 函数写法：可以params参数、query参数，通过props传递给路由组件
-      props: ($route) => ({
-        keyword: $route.params.keyword,
-      }),
-    },
-    {
-      path: "/login",
-      component: LoginPage,
-    },
-    {
-      path: "/register",
-      component: RegisterPage,
-    },
-    // 重定向，在项目跑起来的时候，访问/，立马定向到首页
-    {
-      path: "*",
-      redirect: "/",
-    },
-  ],
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
 });

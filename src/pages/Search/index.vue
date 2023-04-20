@@ -76,9 +76,9 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank">
+                    <router-link :to="`/detail/${good.id}`">
                       <img :src="good.defaultImg" alt="good.title" />
-                    </a>
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -87,9 +87,11 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a target="_blank" href="item.html" :title="good.title">{{
-                      good.title
-                    }}</a>
+                    <router-link
+                      :to="`/detail/${good.id}`"
+                      :title="good.title"
+                      >{{ good.title }}</router-link
+                    >
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
@@ -115,7 +117,7 @@
             :pageSize="searchParams.pageSize"
             :total="total"
             :continues="5"
-            @currentChange="currentChange"
+            @currentChange="getSearchData"
           ></ThePagination>
         </div>
       </div>
@@ -139,7 +141,7 @@ export default {
         keyword: "",
         order: "1:desc",
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 5,
         props: [],
         trademark: "",
       },
@@ -179,7 +181,8 @@ export default {
   },
   methods: {
     // 向服务器发请求获取search模块数据（根据参数不同返回不同的数据进行展示）
-    getSearchData() {
+    getSearchData(page = 1) {
+      this.searchParams.pageNo = page;
       this.$store.dispatch("search/getSearchList", this.searchParams);
     },
     // 更新searchParams
@@ -196,14 +199,14 @@ export default {
     removeBreadcrumbCategoryName() {
       this.searchParams.categoryName = "";
       this.resetSearchId();
-      this.$router.push({ name: "search", params: this.$route.params });
+      this.$router.replace({ name: "search", params: this.$route.params });
     },
     // 删除关键字
     removeBreadcrumbKeyword() {
       this.searchParams.keyword = "";
       // 通知Header / SearchBar清除关键字
       this.$bus.$emit("clearKeyword");
-      this.$router.push({ name: "search", query: this.$route.query });
+      this.$router.replace({ name: "search", query: this.$route.query });
     },
     // 设置品牌
     setTrademark(trademark) {
@@ -219,8 +222,8 @@ export default {
       this.getSearchData();
     },
     // 添加售卖属性
-    addAttrProps(attr, attrValue) {
-      const attrProp = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+    addAttrProps(attrId, attrValue, attrName) {
+      const attrProp = `${attrId}:${attrValue}:${attrName}`;
       if (this.searchParams.props.indexOf(attrProp) === -1) {
         this.searchParams.props.push(attrProp);
         this.getSearchData();
@@ -246,10 +249,6 @@ export default {
       }
 
       this.searchParams.order = [originFlag, originSort].join(":");
-      this.getSearchData();
-    },
-    currentChange(page) {
-      this.searchParams.pageNo = page;
       this.getSearchData();
     },
   },

@@ -81,10 +81,11 @@ import { mapState } from "vuex";
 
 export default {
   name: "TypeNav",
+  props: ["showCategory"],
   data() {
     return {
       currentIndex: -1,
-      isShow: true,
+      isShow: this.showCategory || false,
     };
   },
   computed: {

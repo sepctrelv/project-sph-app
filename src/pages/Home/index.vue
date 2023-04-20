@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--  三级联动全局组件  -->
-    <TypeNav></TypeNav>
+    <TypeNav :showCategory="true"></TypeNav>
     <HomeListContainer></HomeListContainer>
     <HomeRecommend></HomeRecommend>
     <HomeRank></HomeRank>

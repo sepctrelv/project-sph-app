@@ -5,11 +5,13 @@ Vue.use(Vuex);
 // 引入小仓库
 import home from "@/store/home";
 import search from "@/store/search";
+import detail from "@/store/detail";
 
 export default new Vuex.Store({
   // 实现Vuex仓库模块式开发存储数据
   modules: {
     home,
     search,
+    detail,
   },
 });

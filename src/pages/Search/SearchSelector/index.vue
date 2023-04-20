@@ -51,7 +51,7 @@ export default {
       this.$emit("setTrademark", trademark);
     },
     handleAttrInfo(attr, attrValue) {
-      this.$emit("addAttrProps", attr, attrValue);
+      this.$emit("addAttrProps", attr.attrId, attrValue, attr.attrName);
     },
   },
 };
