@@ -18,12 +18,12 @@
 <script>
 import { mapState } from "vuex";
 // 引入其余的组件
-import HomeListContainer from "@/pages/Home/HomeListContainer";
-import HomeRecommend from "@/pages/Home/HomeRecommend";
-import HomeRank from "@/pages/Home/HomeRank";
-import HomeLike from "@/pages/Home/HomeLike";
-import HomeFloor from "@/pages/Home/HomeFloor";
-import HomeBrand from "@/pages/Home/HomeBrand";
+import HomeListContainer from "@/pages/Home/HomeListContainer/index.vue";
+import HomeRecommend from "@/pages/Home/HomeRecommend/index.vue";
+import HomeRank from "@/pages/Home/HomeRank/index.vue";
+import HomeLike from "@/pages/Home/HomeLike/index.vue";
+import HomeFloor from "@/pages/Home/HomeFloor/index.vue";
+import HomeBrand from "@/pages/Home/HomeBrand/index.vue";
 
 export default {
   name: "HomePage",

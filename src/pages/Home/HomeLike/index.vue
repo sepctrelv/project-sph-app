@@ -21,38 +21,41 @@
 </template>
 
 <script>
+import imageUrl_01 from './images/like_01.png'
+import imageUrl_02 from './images/like_02.png'
+import imageUrl_03 from './images/like_03.png'
 export default {
   name: "HomeLike",
   data() {
     return {
       items: [
         {
-          image: require("./images/like_01.png"),
+          image: imageUrl_01,
           title: "阳光美包新款单肩包女包时尚子母包四件套女",
           price: "¥116.00",
         },
         {
-          image: require("./images/like_02.png"),
+          image: imageUrl_02,
           title: "阳光美包新款单肩包女包时尚子母包四件套女",
           price: "¥116.00",
         },
         {
-          image: require("./images/like_03.png"),
+          image: imageUrl_03,
           title: "阳光美包新款单肩包女包时尚子母包四件套女",
           price: "¥116.00",
         },
         {
-          image: require("./images/like_01.png"),
+          image: imageUrl_01,
           title: "阳光美包新款单肩包女包时尚子母包四件套女",
           price: "¥116.00",
         },
         {
-          image: require("./images/like_02.png"),
+          image: imageUrl_02,
           title: "阳光美包新款单肩包女包时尚子母包四件套女",
           price: "¥116.00",
         },
         {
-          image: require("./images/like_03.png"),
+          image: imageUrl_03,
           title: "阳光美包新款单肩包女包时尚子母包四件套女",
           price: "¥116.00",
         },

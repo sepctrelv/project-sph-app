@@ -7,10 +7,10 @@ import VueRouter from "vue-router";
 // 使用插件
 Vue.use(VueRouter);
 // 引入路由组件
-import HomePage from "@/pages/Home";
-import SearchPage from "@/pages/Search";
-import LoginPage from "@/pages/Login";
-import RegisterPage from "@/pages/Register";
+import HomePage from "@/pages/Home/index.vue";
+import SearchPage from "@/pages/Search/index.vue";
+import LoginPage from "@/pages/Login/index.vue";
+import RegisterPage from "@/pages/Register/index.vue";
 // 先把VueRouter原型对象的push，先保存一份
 const { push: originPush, replace: originReplace } = VueRouter.prototype;
 

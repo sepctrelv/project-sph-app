@@ -119,7 +119,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import SearchSelector from "@/pages/Search/SearchSelector";
+import SearchSelector from "@/pages/Search/SearchSelector/index.vue";
 export default {
   name: "SearchPage",
   components: { SearchSelector },

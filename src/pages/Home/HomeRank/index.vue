@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import imageUrl from './images/1.jpg'
 export default {
   name: "HomeRank",
   data() {
@@ -52,28 +53,28 @@ export default {
       items: [
         {
           id: "001",
-          image: require("./images/1.jpg"),
+          image: imageUrl,
           title:
             "官网价直降1100】Apple iPhone 8 Plus 256GB 银色 移动联通电信4G手机",
           price: "¥100.00",
         },
         {
           id: "002",
-          image: require("./images/1.jpg"),
+          image: imageUrl,
           title:
             "官网价直降1100】Apple iPhone 8 Plus 256GB 银色 移动联通电信4G手机",
           price: "¥100.00",
         },
         {
           id: "003",
-          image: require("./images/1.jpg"),
+          image: imageUrl,
           title:
             "官网价直降1100】Apple iPhone 8 Plus 256GB 银色 移动联通电信4G手机",
           price: "¥100.00",
         },
         {
           id: "004",
-          image: require("./images/1.jpg"),
+          image: imageUrl,
           title:
             "官网价直降1100】Apple iPhone 8 Plus 256GB 银色 移动联通电信4G手机",
           price: "¥100.00",

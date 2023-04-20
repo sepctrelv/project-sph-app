@@ -11,6 +11,16 @@
 </template>
 
 <script>
+import imageBrand_21 from './images/brand_21.png';
+import imageBrand_03 from './images/brand_03.png';
+import imageBrand_05 from './images/brand_05.png';
+import imageBrand_07 from './images/brand_07.png';
+import imageBrand_09 from './images/brand_09.png';
+import imageBrand_11 from './images/brand_11.png';
+import imageBrand_13 from './images/brand_13.png';
+import imageBrand_15 from './images/brand_15.png';
+import imageBrand_17 from './images/brand_17.png';
+import imageBrand_19 from './images/brand_19.png';
 export default {
   name: "HomeBrand",
   data() {
@@ -18,43 +28,43 @@ export default {
       items: [
         {
           id: "001",
-          image: require("./images/brand_21.png"),
+          image: imageBrand_21,
         },
         {
           id: "002",
-          image: require("./images/brand_03.png"),
+          image: imageBrand_03,
         },
         {
           id: "003",
-          image: require("./images/brand_05.png"),
+          image: imageBrand_05,
         },
         {
           id: "004",
-          image: require("./images/brand_07.png"),
+          image: imageBrand_07,
         },
         {
           id: "005",
-          image: require("./images/brand_09.png"),
+          image: imageBrand_09,
         },
         {
           id: "006",
-          image: require("./images/brand_11.png"),
+          image: imageBrand_11,
         },
         {
           id: "007",
-          image: require("./images/brand_13.png"),
+          image: imageBrand_13,
         },
         {
           id: "008",
-          image: require("./images/brand_15.png"),
+          image: imageBrand_15,
         },
         {
           id: "009",
-          image: require("./images/brand_17.png"),
+          image: imageBrand_17,
         },
         {
           id: "010",
-          image: require("./images/brand_19.png"),
+          image: imageBrand_19,
         },
       ],
     };
