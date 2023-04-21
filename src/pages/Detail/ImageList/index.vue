@@ -22,6 +22,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Swiper from "swiper/bundle";
+
 export default {
   name: "ImageList",
   data() {
@@ -35,8 +36,8 @@ export default {
   watch: {
     skuImageList: {
       immediate: true,
-      handler(value) {
-        if (value.length === 0) return;
+      handler(imageList) {
+        if (imageList.length === 0) return;
 
         this.$nextTick(() => {
           new Swiper(this.$refs.detailSwiper, {
@@ -54,6 +55,7 @@ export default {
   methods: {
     changeCurrentIndex(index) {
       this.currentIndex = index;
+      this.$emit("changeCurrentIndex", this.currentIndex);
     },
   },
 };

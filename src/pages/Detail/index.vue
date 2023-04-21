@@ -28,9 +28,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom :imgUrl="skuInfo.skuDefaultImg"></Zoom>
+          <Zoom :imgUrl="skuImageList[currentIndex]?.imgUrl"></Zoom>
           <!-- 小图列表 -->
-          <ImageList></ImageList>
+          <ImageList @changeCurrentIndex="changeImageIndex"></ImageList>
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -83,39 +83,37 @@
           <div class="choose">
             <div class="chooseArea">
               <div class="choosed"></div>
-              <dl>
-                <dt class="title">选择颜色</dt>
-                <dd changepirce="0" class="active">金色</dd>
-                <dd changepirce="40">银色</dd>
-                <dd changepirce="90">黑色</dd>
-              </dl>
-              <dl>
-                <dt class="title">内存容量</dt>
-                <dd changepirce="0" class="active">16G</dd>
-                <dd changepirce="300">64G</dd>
-                <dd changepirce="900">128G</dd>
-                <dd changepirce="1300">256G</dd>
-              </dl>
-              <dl>
-                <dt class="title">选择版本</dt>
-                <dd changepirce="0" class="active">公开版</dd>
-                <dd changepirce="-1000">移动版</dd>
-              </dl>
-              <dl>
-                <dt class="title">购买方式</dt>
-                <dd changepirce="0" class="active">官方标配</dd>
-                <dd changepirce="-240">优惠移动版</dd>
-                <dd changepirce="-390">电信优惠版</dd>
+              <dl v-for="spuSaleAttr in spuSaleAttrList" :key="spuSaleAttr.id">
+                <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
+                <dd
+                  v-for="value in spuSaleAttr.spuSaleAttrValueList"
+                  :key="value.id"
+                  :class="{ active: value.isChecked === '1' }"
+                  @click="
+                    selectAttrValue(value, spuSaleAttr.spuSaleAttrValueList)
+                  "
+                >
+                  {{ value.saleAttrValueName }}
+                </dd>
               </dl>
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model.number="skuNum"
+                />
+                <a class="plus" @click="skuNum++">+</a>
+                <a
+                  class="mins"
+                  :class="{ disabled: skuNum === 1 }"
+                  @click="skuNum > 1 ? skuNum-- : ''"
+                  >-</a
+                >
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a href="javascript:" @click="addToCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -357,14 +355,50 @@
 import { mapGetters } from "vuex";
 import Zoom from "@/pages/Detail/Zoom/index.vue";
 import ImageList from "@/pages/Detail/ImageList/index.vue";
+
 export default {
   name: "Detail",
   components: { Zoom, ImageList },
+  data() {
+    return {
+      currentIndex: 0,
+      skuNum: 1,
+    };
+  },
   computed: {
-    ...mapGetters("detail", ["categoryView", "skuInfo"]),
+    ...mapGetters("detail", [
+      "categoryView",
+      "skuInfo",
+      "spuSaleAttrList",
+      "skuImageList",
+    ]),
+  },
+  watch: {
+    skuNum(value) {
+      if (isNaN(value) || value < 1) {
+        this.skuNum = 1;
+      } else {
+        this.skuNum = parseInt(value);
+      }
+    },
   },
   mounted() {
     this.$store.dispatch("detail/getDetailInfo", this.$route.params.skuId);
+  },
+  methods: {
+    selectAttrValue(value, valueList) {
+      if (value.isChecked === "1") {
+        valueList.forEach((item) => (item.isChecked = "0"));
+        value.isChecked = "1";
+      }
+    },
+    changeImageIndex(index) {
+      this.currentIndex = index;
+    },
+    addToCart() {
+      console.log("addToCart");
+      const query = { skuId: this.skuInfo.id, skuNum: this.skuNum };
+    },
   },
 };
 </script>
@@ -525,6 +559,8 @@ export default {
                 border-right: 1px solid #bbb;
                 border-bottom: 1px solid #bbb;
                 border-left: 1px solid #eee;
+                cursor: pointer;
+                user-select: none;
 
                 &.active {
                   color: green;
@@ -562,6 +598,16 @@ export default {
                 position: absolute;
                 right: -8px;
                 border: 1px solid #ccc;
+                cursor: pointer;
+
+                &:hover {
+                  text-decoration: none;
+                }
+              }
+
+              .disabled {
+                color: #ccc;
+                cursor: not-allowed;
               }
 
               .mins {

@@ -87,11 +87,9 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <router-link
-                      :to="`/detail/${good.id}`"
-                      :title="good.title"
-                      >{{ good.title }}</router-link
-                    >
+                    <router-link :to="`/detail/${good.id}`" :title="good.title"
+                      >{{ good.title }}
+                    </router-link>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
@@ -128,6 +126,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import SearchSelector from "@/pages/Search/SearchSelector/index.vue";
+
 export default {
   name: "SearchPage",
   components: { SearchSelector },
@@ -141,7 +140,7 @@ export default {
         keyword: "",
         order: "1:desc",
         pageNo: 1,
-        pageSize: 5,
+        pageSize: 10,
         props: [],
         trademark: "",
       },

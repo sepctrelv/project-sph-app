@@ -1,19 +1,52 @@
 <template>
   <div class="spec-preview">
     <img :src="imgUrl" alt="" />
-    <div class="event"></div>
+    <div class="event" @mousemove="handleMove" ref="event"></div>
     <div class="big">
-      <img :src="imgUrl" alt="" />
+      <img :src="imgUrl" alt="" ref="bigImg" />
     </div>
-    <div class="mask"></div>
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
 <script>
+import { throttle } from "lodash";
+
 export default {
   name: "Zoom",
   props: {
     imgUrl: String,
+  },
+  mounted() {
+    this.maskWidth = this.$refs.event.clientWidth / 2;
+  },
+  methods: {
+    handleMove: throttle(function (event) {
+      const posX = event.layerX || event.offsetX;
+      const posY = event.layerY || event.offsetY;
+      const maskWidth = this.maskWidth;
+      let leftPosition = posX - maskWidth / 2;
+      let topPosition = posY - maskWidth / 2;
+
+      if (leftPosition < 0) {
+        leftPosition = 0;
+      } else if (leftPosition > maskWidth) {
+        leftPosition = maskWidth;
+      }
+      if (topPosition < 0) {
+        topPosition = 0;
+      } else if (topPosition > maskWidth) {
+        topPosition = maskWidth;
+      }
+
+      const maskEl = this.$refs.mask;
+      maskEl.style.transform = `translate(${leftPosition}px, ${topPosition}px)`;
+
+      const bigImgEl = this.$refs.bigImg;
+      bigImgEl.style.transform = `translate(${-2 * leftPosition}px, ${
+        -2 * topPosition
+      }px)`;
+    }, 16),
   },
 };
 </script>
