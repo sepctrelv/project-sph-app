@@ -2,8 +2,10 @@
 import HomePage from "@/pages/Home/index.vue";
 import SearchPage from "@/pages/Search/index.vue";
 import DetailPage from "@/pages/Detail/index.vue";
+import AddCartSuccess from "@/pages/AddCartSuccess/index.vue";
 import LoginPage from "@/pages/Login/index.vue";
 import RegisterPage from "@/pages/Register/index.vue";
+import ShopCart from "@/pages/ShopCart/index.vue";
 
 export default [
   {
@@ -33,10 +35,30 @@ export default [
     },
   },
   {
+    name: "addCartSuccess",
+    path: "/addCartSuccess",
+    component: AddCartSuccess,
+    meta: {
+      showFooter: true,
+      showSearchBar: true,
+    },
+  },
+  {
+    name: "shopcart",
+    path: "/shopcart",
+    component: ShopCart,
+    meta: {
+      showFooter: true,
+      showSearchBar: true,
+    },
+  },
+  {
+    name: "login",
     path: "/login",
     component: LoginPage,
   },
   {
+    name: "register",
     path: "/register",
     component: RegisterPage,
   },

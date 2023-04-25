@@ -387,7 +387,7 @@ export default {
   },
   methods: {
     selectAttrValue(value, valueList) {
-      if (value.isChecked === "1") {
+      if (value.isChecked !== "1") {
         valueList.forEach((item) => (item.isChecked = "0"));
         value.isChecked = "1";
       }
@@ -395,9 +395,25 @@ export default {
     changeImageIndex(index) {
       this.currentIndex = index;
     },
-    addToCart() {
-      console.log("addToCart");
-      const query = { skuId: this.skuInfo.id, skuNum: this.skuNum };
+    async addToCart() {
+      try {
+        await this.$store.dispatch("detail/addOrUpdateShopCart", {
+          skuId: this.skuInfo.id,
+          skuNum: this.skuNum,
+        });
+        // 路由跳转
+        sessionStorage.setItem(
+          "spuSaleAttrList",
+          JSON.stringify(this.spuSaleAttrList)
+        );
+        sessionStorage.setItem("skuInfo", JSON.stringify(this.skuInfo));
+        this.$router.push({
+          name: "addCartSuccess",
+          query: { skuNum: this.skuNum },
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
     },
   },
 };

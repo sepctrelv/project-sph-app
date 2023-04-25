@@ -30,3 +30,18 @@ export const reqGetSearchInfo = (searchParams = {}) => {
 export const reqGetDetailInfo = (skuId) => {
   return service.get(`/item/${skuId}`);
 };
+
+// 将产品添加到购物车中（或者更新某一个产品的个数）
+export const reqAllOrUpdateShopCart = (skuId, skuNum) => {
+  return service.post(`/cart/addToCart/${skuId}/${skuNum}`);
+};
+
+// 获取购物车列表
+export const reqGetShopCart = () => {
+  return service.get("/cart/cartList");
+};
+
+// 删除购物车商品
+export const reqDeleteCart = (skuId) => {
+  return service.delete(`/cart/deleteCart/${skuId}`);
+};
