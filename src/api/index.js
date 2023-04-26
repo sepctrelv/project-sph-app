@@ -50,3 +50,17 @@ export const reqDeleteCart = (skuId) => {
 export const reqUpdateChecked = (skuId, isChecked) => {
   return service.get(`/cart/checkCart/${skuId}/${isChecked}`);
 };
+
+// 获取注册验证码
+export const reqGetCode = (phone) => {
+  return service.get(`/user/passport/sendCode/${phone}`);
+};
+
+// 注册用户
+export const reqUserRegister = (data) => {
+  return service({
+    url: "/user/passport/register",
+    method: "post",
+    data,
+  });
+};

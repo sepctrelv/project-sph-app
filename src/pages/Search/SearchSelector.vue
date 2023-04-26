@@ -26,7 +26,7 @@
         <ul class="type-list">
           <li
             v-for="(attrValue, index) in attr.attrValueList"
-            :key="index"
+            :key="SearchSelector"
             @click="handleAttrInfo(attr, attrValue)"
           >
             <a>{{ attrValue }}</a>

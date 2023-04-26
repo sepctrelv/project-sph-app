@@ -34,7 +34,7 @@ const actions = {
         delete searchParams[key];
       }
     });
-    let result = await reqGetSearchInfo(searchParams);
+    const result = await reqGetSearchInfo(searchParams);
     if (result.code === 200) {
       commit("RECEIVE_SEARCH_LIST", result.data);
     }

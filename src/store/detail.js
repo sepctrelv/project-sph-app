@@ -41,7 +41,7 @@ const actions = {
     }
   },
   // 将产品添加到购物车中
-  async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
+  async addOrUpdateShopCart(_, { skuId, skuNum }) {
     const result = await reqAllOrUpdateShopCart(skuId, skuNum);
     if (result.code === 200) {
       return "ok";

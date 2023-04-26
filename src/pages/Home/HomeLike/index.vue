@@ -21,9 +21,10 @@
 </template>
 
 <script>
-import imageUrl_01 from './images/like_01.png'
-import imageUrl_02 from './images/like_02.png'
-import imageUrl_03 from './images/like_03.png'
+import imageUrl_01 from "./images/like_01.png";
+import imageUrl_02 from "./images/like_02.png";
+import imageUrl_03 from "./images/like_03.png";
+
 export default {
   name: "HomeLike",
   data() {
@@ -84,7 +85,7 @@ export default {
 
       .fr {
         float: right;
-        background-image: url(./images/icons.png);
+        background-image: url(@/assets/images/icons.png);
         width: 66px;
         height: 25px;
         background-position: 182px -104px;

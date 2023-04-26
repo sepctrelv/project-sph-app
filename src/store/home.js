@@ -20,19 +20,19 @@ const getters = {};
 const actions = {
   // 通过API里面的接口函数调用，向服务器发请求，获取服务器的数据
   async getBaseCategoryList({ commit }) {
-    let result = await reqGetCategoryList();
+    const result = await reqGetCategoryList();
     if (result.code === 200) {
       commit("RECEIVE_BASE_CATEGORY_LIST", result.data);
     }
   },
   async getBannerList({ commit }) {
-    let result = await reqGetBannerList();
+    const result = await reqGetBannerList();
     if (result.code === 200) {
       commit("RECEIVE_BANNER_LIST", result.data);
     }
   },
   async getFloorList({ commit }) {
-    let result = await reqGetFloorList();
+    const result = await reqGetFloorList();
     if (result.code === 200) {
       commit("RECEIVE_FLOOR_LIST", result.data);
     }

@@ -125,7 +125,7 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import SearchSelector from "@/pages/Search/SearchSelector/index.vue";
+import SearchSelector from "@/pages/Search/SearchSelector.vue";
 
 export default {
   name: "SearchPage",

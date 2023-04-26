@@ -25,21 +25,21 @@ const getters = {
  */
 const actions = {
   async getCartList({ commit }) {
-    let result = await reqGetShopCart();
+    const result = await reqGetShopCart();
     if (result.code === 200) {
       commit("RECEIVE_CART_LIST", result.data);
     }
   },
-  async deleteCart({ commit }, skuId) {
-    let result = await reqDeleteCart(skuId);
+  async deleteCart(_, skuId) {
+    const result = await reqDeleteCart(skuId);
     if (result.code === 200) {
       return "ok";
     } else {
       return Promise.reject(new Error("Delete Cart Failed!"));
     }
   },
-  async updateChecked({ commit }, { skuId, isChecked }) {
-    let result = await reqUpdateChecked(skuId, isChecked);
+  async updateChecked(_, { skuId, isChecked }) {
+    const result = await reqUpdateChecked(skuId, isChecked);
     if (result.code === 200) {
       return "ok";
     } else {
@@ -47,7 +47,7 @@ const actions = {
     }
   },
   deleteAllCheckedCart({ dispatch, getters }) {
-    let filteredCart = getters.cartInfoList.filter(
+    const filteredCart = getters.cartInfoList.filter(
       (cart) => cart.isChecked === 1
     );
     return Promise.all(
