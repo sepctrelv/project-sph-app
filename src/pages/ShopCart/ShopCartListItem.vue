@@ -5,7 +5,7 @@
         type="checkbox"
         name="chk_list"
         :checked="cart.isChecked === 1"
-        @change="cart.isChecked = cart.isChecked === 1 ? 0 : 1"
+        @change="updateChecked"
       />
     </li>
     <li class="cart-list-con2">
@@ -78,6 +78,18 @@ export default {
     async deleteCart() {
       try {
         await this.$store.dispatch("shopcart/deleteCart", this.cart.skuId);
+        this.$emit("updateCartDate");
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    async updateChecked(event) {
+      try {
+        const isChecked = event.target.checked ? "1" : "0";
+        await this.$store.dispatch("shopcart/updateChecked", {
+          skuId: this.cart.skuId,
+          isChecked,
+        });
         this.$emit("updateCartDate");
       } catch (error) {
         console.log(error.message);

@@ -21,13 +21,18 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" v-model="isAllChecked" />
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isAllChecked"
+          @change="updateAllChecked"
+        />
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
-        <a href="#none">清除下柜商品</a>
+        <a @click="deleteAllCheckedCart">删除选中的商品</a>
+        <a>移到我的关注</a>
+        <a>清除下柜商品</a>
       </div>
       <div class="money-box">
         <div class="chosed">已选择 <span>0</span>件商品</div>
@@ -54,9 +59,7 @@ export default {
     ...mapGetters("shopcart", ["cartInfoList"]),
     isAllChecked() {
       if (this.cartInfoList.length === 0) return false;
-      return this.cartInfoList.every((data) => {
-        return data.isChecked === 1;
-      });
+      return this.cartInfoList.every((data) => data.isChecked === 1);
     },
   },
   mounted() {
@@ -71,6 +74,23 @@ export default {
         (total, cur) => total + cur.skuPrice * cur.skuNum,
         0
       );
+    },
+    async deleteAllCheckedCart() {
+      try {
+        await this.$store.dispatch("shopcart/deleteAllCheckedCart");
+        this.getShopCartDate();
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+    async updateAllChecked(event) {
+      try {
+        const isChecked = event.target.checked ? "1" : "0";
+        await this.$store.dispatch("shopcart/updateAllChecked", isChecked);
+        this.getShopCartDate();
+      } catch (error) {
+        alert(error.message);
+      }
     },
   },
 };
@@ -154,6 +174,11 @@ export default {
         float: left;
         padding: 0 10px;
         color: #666;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
 

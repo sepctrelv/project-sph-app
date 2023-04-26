@@ -1,4 +1,8 @@
-import { reqGetShopCart, reqDeleteCart } from "@/api/index.js";
+import {
+  reqGetShopCart,
+  reqDeleteCart,
+  reqUpdateChecked,
+} from "@/api/index.js";
 
 /**
  * State
@@ -31,8 +35,31 @@ const actions = {
     if (result.code === 200) {
       return "ok";
     } else {
-      return Promise.reject(new Error("failure"));
+      return Promise.reject(new Error("Delete Cart Failed!"));
     }
+  },
+  async updateChecked({ commit }, { skuId, isChecked }) {
+    let result = await reqUpdateChecked(skuId, isChecked);
+    if (result.code === 200) {
+      return "ok";
+    } else {
+      return Promise.reject(new Error("Update Checked Failed!"));
+    }
+  },
+  deleteAllCheckedCart({ dispatch, getters }) {
+    let filteredCart = getters.cartInfoList.filter(
+      (cart) => cart.isChecked === 1
+    );
+    return Promise.all(
+      filteredCart.map((cart) => dispatch("deleteCart", cart.skuId))
+    );
+  },
+  updateAllChecked({ dispatch, getters }, isChecked) {
+    return Promise.all(
+      getters.cartInfoList.map((cart) =>
+        dispatch("updateChecked", { skuId: cart.skuId, isChecked })
+      )
+    );
   },
 };
 

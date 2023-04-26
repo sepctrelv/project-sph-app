@@ -46,7 +46,7 @@ const actions = {
     if (result.code === 200) {
       return "ok";
     } else {
-      return Promise.reject(new Error("failure"));
+      return Promise.reject(new Error("Add Or Update ShopCart Failed!"));
     }
   },
 };

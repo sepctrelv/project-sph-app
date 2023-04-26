@@ -45,3 +45,8 @@ export const reqGetShopCart = () => {
 export const reqDeleteCart = (skuId) => {
   return service.delete(`/cart/deleteCart/${skuId}`);
 };
+
+// 修改商品的选中状态
+export const reqUpdateChecked = (skuId, isChecked) => {
+  return service.get(`/cart/checkCart/${skuId}/${isChecked}`);
+};

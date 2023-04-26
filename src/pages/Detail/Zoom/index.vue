@@ -25,8 +25,10 @@ export default {
       const posX = event.layerX || event.offsetX;
       const posY = event.layerY || event.offsetY;
       const maskWidth = this.maskWidth;
-      let leftPosition = posX - maskWidth / 2;
-      let topPosition = posY - maskWidth / 2;
+      let leftPosition = 0;
+      let topPosition = 0;
+      leftPosition = posX - maskWidth / 2;
+      topPosition = posY - maskWidth / 2;
 
       if (leftPosition < 0) {
         leftPosition = 0;
