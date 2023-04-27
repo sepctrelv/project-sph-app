@@ -5,6 +5,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes.js";
+import store from "@/store";
 
 // 使用插件
 Vue.use(VueRouter);
@@ -51,7 +52,7 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 };
 
 // 配置路由
-export default new VueRouter({
+const router = new VueRouter({
   mode: "history",
   routes,
   scrollBehavior(to, from, savedPosition) {
@@ -62,3 +63,32 @@ export default new VueRouter({
     }
   },
 });
+
+router.beforeEach(async (to, from, next) => {
+  const token = store.state.user.token;
+  const name = store.state.user.userInfo.name;
+  if (token) {
+    if (to.path === "/login" || to.path === "/register") {
+      next("/");
+    } else {
+      if (name) {
+        next();
+      } else {
+        // 没有用户信息，派发action让仓库存储用户信息再跳转
+        try {
+          await store.dispatch("user/getUserInfo");
+          next();
+        } catch (error) {
+          // token失效了,清空token,跳转登录
+          console.log(error.message);
+          store.commit("user/CLEAR_USER_INFO");
+          next("/login");
+        }
+      }
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;

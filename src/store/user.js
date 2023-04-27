@@ -57,6 +57,8 @@ const actions = {
     if (result.code === 200) {
       commit("RECEIVE_USER_INFO", result.data);
       return "ok";
+    } else {
+      return Promise.reject(new Error(result.message));
     }
   },
   async userLogout({ commit }) {
