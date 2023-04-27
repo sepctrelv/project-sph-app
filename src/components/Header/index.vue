@@ -5,10 +5,16 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="!userName">
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
+          </p>
+          <p v-else>
+            <a>{{ userName }}</a>
+            <a href="javascript:void(0)" class="logout" @click="userLogout"
+              >退出登录</a
+            >
           </p>
         </div>
         <div class="typeList">
@@ -41,6 +47,22 @@ import SearchBar from "@/components/Header/SearchBar.vue";
 export default {
   name: "TheHeader",
   components: { SearchBar },
+  computed: {
+    userName() {
+      return this.$store.state.user.userInfo.name || "";
+    },
+  },
+  mounted() {},
+  methods: {
+    async userLogout() {
+      try {
+        await this.$store.dispatch("user/userLogout");
+        await this.$router.push("/");
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+  },
 };
 </script>
 
@@ -63,7 +85,8 @@ export default {
           float: left;
           margin-right: 10px;
 
-          .register {
+          .register,
+          .logout {
             border-left: 1px solid #b3aeae;
             padding: 0 5px;
             margin-left: 5px;

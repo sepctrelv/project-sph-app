@@ -407,7 +407,7 @@ export default {
           JSON.stringify(this.spuSaleAttrList)
         );
         sessionStorage.setItem("skuInfo", JSON.stringify(this.skuInfo));
-        this.$router.push({
+        await this.$router.push({
           name: "addCartSuccess",
           query: { skuNum: this.skuNum },
         });

@@ -110,7 +110,7 @@ export default {
             password: this.password,
             code: this.code,
           });
-          this.$router.push("/login");
+          await this.$router.push("/login");
         }
       } catch (error) {
         alert(error.message);

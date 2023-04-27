@@ -41,6 +41,7 @@ export default {
     }),
   },
   mounted() {
+    this.$store.dispatch("user/getUserInfo");
     this.$store.dispatch("home/getFloorList");
   },
 };

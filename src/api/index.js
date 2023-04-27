@@ -58,9 +58,20 @@ export const reqGetCode = (phone) => {
 
 // 注册用户
 export const reqUserRegister = (data) => {
-  return service({
-    url: "/user/passport/register",
-    method: "post",
-    data,
-  });
+  return service.post("/user/passport/register", data);
+};
+
+// 登录
+export const reqUserLogin = (data) => {
+  return service.post("/user/passport/login", data);
+};
+
+// 获取用户信息(带着用户的token)
+export const reqGetUserInfo = () => {
+  return service.get("/user/passport/auth/getUserInfo");
+};
+
+// 退出登录
+export const reqUserLogout = () => {
+  return service.get("/user/passport/logout");
 };

@@ -27,6 +27,9 @@ service.interceptors.request.use((config) => {
     // 请求头添加一个字段(userTempId)，和后台沟通好
     config.headers.userTempId = store.state.detail.nanoid_token;
   }
+  if (store.state.user.token) {
+    config.headers.token = store.state.user.token;
+  }
   // 进度条开始
   NProgress.start();
   return config;
