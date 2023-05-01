@@ -74,7 +74,7 @@ export default {
       } catch (error) {
         console.log(error.message);
       }
-    }, 500),
+    }, 400),
     async deleteCart() {
       try {
         await this.$store.dispatch("shopcart/deleteCart", this.cart.skuId);
@@ -84,12 +84,12 @@ export default {
       }
     },
     async updateChecked(event) {
+      let params = {
+        skuId: this.cart.skuId,
+        isChecked: event.target.checked ? "1" : "0",
+      };
       try {
-        const isChecked = event.target.checked ? "1" : "0";
-        await this.$store.dispatch("shopcart/updateChecked", {
-          skuId: this.cart.skuId,
-          isChecked,
-        });
+        await this.$store.dispatch("shopcart/updateChecked", params);
         this.$emit("updateCartDate");
       } catch (error) {
         console.log(error.message);

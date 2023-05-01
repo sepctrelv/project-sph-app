@@ -11,6 +11,7 @@
 <script>
 import TheHeader from "@/components/Header/index.vue";
 import TheFooter from "@/components/Footer/index.vue";
+
 export default {
   name: "App",
   components: {
@@ -24,4 +25,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>

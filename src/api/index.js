@@ -75,3 +75,28 @@ export const reqGetUserInfo = () => {
 export const reqUserLogout = () => {
   return service.get("/user/passport/logout");
 };
+
+// 获取用户地址
+export const reqGetUserAddress = () => {
+  return service.get("/user/userAddress/auth/findUserAddressList");
+};
+
+// 获取订单交易页信息
+export const reqGetOrderInfo = () => {
+  return service.get("/order/auth/trade");
+};
+
+// 提交订单
+export const reqSubmitOrder = (tradeNo, data) => {
+  return service.post(`/order/auth/submitOrder?tradeNo=${tradeNo}`, data);
+};
+
+// 获取订单支付信息
+export const reqGetPaymentInfo = (orderId) => {
+  return service.get(`/payment/weixin/createNative/${orderId}`);
+};
+
+// 查询支付订单状态
+export const reqGetPaymentStatus = (orderId) => {
+  return service.get(`/payment/weixin/queryPayStatus/${orderId}`);
+};

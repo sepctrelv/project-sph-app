@@ -13,6 +13,8 @@ Vue.component(ThePagination.name, ThePagination);
 // 引入MockServer
 import "@/mock/mockServer";
 import "swiper/css/bundle";
+// 统一接收api文件夹里面的全部请求函数
+import * as API from "@/api";
 
 Vue.config.productionTip = false;
 
@@ -20,6 +22,7 @@ new Vue({
   render: (h) => h(App),
   beforeCreate() {
     Vue.prototype.$bus = this;
+    Vue.prototype.$API = API;
   },
   // 注册路由
   router,

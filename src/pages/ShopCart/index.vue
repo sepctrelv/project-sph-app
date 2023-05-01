@@ -35,13 +35,16 @@
         <a>清除下柜商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择 <span>0</span>件商品</div>
+        <div class="chosed">
+          已选择 <span>{{ selectedCart.length }}</span
+          >件商品
+        </div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
-          <i class="summoney">{{ getTotalPrice() }}</i>
+          <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <router-link class="sum-btn" to="/trade">结算</router-link>
         </div>
       </div>
     </div>
@@ -61,19 +64,23 @@ export default {
       if (this.cartInfoList.length === 0) return false;
       return this.cartInfoList.every((data) => data.isChecked === 1);
     },
+    selectedCart() {
+      return this.cartInfoList.filter((item) => item.isChecked === 1);
+    },
+    totalPrice() {
+      return this.selectedCart.reduce(
+        (total, cur) => total + cur.skuPrice * cur.skuNum,
+        0
+      );
+    },
   },
   mounted() {
     this.getShopCartDate();
   },
   methods: {
     getShopCartDate() {
+      console.log(123);
       this.$store.dispatch("shopcart/getCartList");
-    },
-    getTotalPrice() {
-      return this.cartInfoList.reduce(
-        (total, cur) => total + cur.skuPrice * cur.skuNum,
-        0
-      );
     },
     async deleteAllCheckedCart() {
       try {
@@ -217,6 +224,7 @@ export default {
           font-family: "Microsoft YaHei";
           background: #e1251b;
           overflow: hidden;
+          cursor: pointer;
         }
       }
     }
