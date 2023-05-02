@@ -142,7 +142,7 @@ export default {
             clearInterval(this.timer);
             this.timer = null;
             done();
-            this.$router.push("/paySuccess");
+            this.$router.push("/paysuccess");
             // }
           } else {
             clearInterval(this.timer);
@@ -166,7 +166,7 @@ export default {
             this.timer = null;
             this.code = result.code;
             MessageBox.close();
-            this.$router.push("/paySuccess");
+            this.$router.push("/paysuccess");
           }
         }, 1000);
       }

@@ -15,6 +15,13 @@ import "@/mock/mockServer";
 import "swiper/css/bundle";
 // 统一接收api文件夹里面的全部请求函数
 import * as API from "@/api";
+// 引入Vue Lazyload
+import VueLazyload from "vue-lazyload";
+import loaderImg from "@/assets/loader.gif";
+
+Vue.use(VueLazyload, {
+  loading: loaderImg,
+});
 
 Vue.config.productionTip = false;
 

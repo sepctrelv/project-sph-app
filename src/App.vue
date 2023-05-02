@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import TheHeader from "@/components/Header/index.vue";
-import TheFooter from "@/components/Footer/index.vue";
+const TheHeader = () => import("@/components/Header/index.vue");
+const TheFooter = () => import("@/components/Footer/index.vue");
 
 export default {
   name: "App",

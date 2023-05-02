@@ -19,7 +19,6 @@ const actions = {
   // 获取商品清单数据
   async getOrderInfo({ commit }) {
     const result = await reqGetOrderInfo();
-    console.log(result);
     if (result.code === 200) {
       commit("RECEIVE_ORDER_INFO", result.data);
     }

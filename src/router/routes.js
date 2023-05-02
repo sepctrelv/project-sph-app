@@ -1,23 +1,7 @@
-// 引入一级路由组件
-import HomePage from "@/pages/Home/index.vue";
-import SearchPage from "@/pages/Search/index.vue";
-import DetailPage from "@/pages/Detail/index.vue";
-import AddCartSuccess from "@/pages/AddCartSuccess/index.vue";
-import LoginPage from "@/pages/Login/index.vue";
-import RegisterPage from "@/pages/Register/index.vue";
-import ShopCart from "@/pages/ShopCart/index.vue";
-import Trade from "@/pages/Trade/index.vue";
-import Pay from "@/pages/Pay/index.vue";
-import PaySuccess from "@/pages/PaySuccess/index.vue";
-import Center from "@/pages/Center/index.vue";
-// 引入二级路由组件
-import MyOrder from "@/pages/Center/MyOrder/index.vue";
-import GroupOrder from "@/pages/Center/GroupOrder/index.vue";
-
 export default [
   {
     path: "/",
-    component: HomePage,
+    component: () => import("@/pages/Home/index.vue"),
     meta: {
       showFooter: true,
       showSearchBar: true,
@@ -26,7 +10,7 @@ export default [
   {
     name: "search",
     path: "/search/:keyword?",
-    component: SearchPage,
+    component: () => import("@/pages/Search/index.vue"),
     meta: {
       showFooter: true,
       showSearchBar: true,
@@ -35,7 +19,7 @@ export default [
   {
     name: "detail",
     path: "/detail/:skuId",
-    component: DetailPage,
+    component: () => import("@/pages/Detail/index.vue"),
     meta: {
       showFooter: true,
       showSearchBar: true,
@@ -43,8 +27,8 @@ export default [
   },
   {
     name: "addCartSuccess",
-    path: "/addCartSuccess",
-    component: AddCartSuccess,
+    path: "/addcartsuccess",
+    component: () => import("@/pages/AddCartSuccess/index.vue"),
     meta: {
       showFooter: true,
       showSearchBar: true,
@@ -53,7 +37,7 @@ export default [
   {
     name: "shopcart",
     path: "/shopcart",
-    component: ShopCart,
+    component: () => import("@/pages/ShopCart/index.vue"),
     meta: {
       showFooter: true,
       showSearchBar: true,
@@ -61,21 +45,36 @@ export default [
   },
   {
     path: "/trade",
-    component: Trade,
+    component: () => import("@/pages/Trade/index.vue"),
     meta: {
       showFooter: true,
+    },
+    beforeEnter: (to, from, next) => {
+      if (from.path === "/shopcart") {
+        next();
+      } else {
+        next(from.path);
+      }
     },
   },
   {
     path: "/pay",
-    component: Pay,
+    component: () => import("@/pages/Pay/index.vue"),
     meta: {
       showFooter: true,
     },
+    beforeEnter: (to, from, next) => {
+      console.log(from.path);
+      if (from.path === "/trade") {
+        next();
+      } else {
+        next(from.path);
+      }
+    },
   },
   {
-    path: "/paySuccess",
-    component: PaySuccess,
+    path: "/paysuccess",
+    component: () => import("@/pages/PaySuccess/index.vue"),
     meta: {
       showFooter: true,
     },
@@ -83,7 +82,7 @@ export default [
   {
     name: "center",
     path: "/center",
-    component: Center,
+    component: () => import("@/pages/Center/index.vue"),
     meta: {
       showFooter: true,
       showSearchBar: true,
@@ -91,11 +90,11 @@ export default [
     children: [
       {
         path: "myorder",
-        component: MyOrder,
+        component: () => import("@/pages/Center/MyOrder/index.vue"),
       },
       {
         path: "grouporder",
-        component: GroupOrder,
+        component: () => import("@/pages/Center/GroupOrder/index.vue"),
       },
     ],
     redirect: "/center/myorder",
@@ -103,12 +102,12 @@ export default [
   {
     name: "login",
     path: "/login",
-    component: LoginPage,
+    component: () => import("@/pages/Login/index.vue"),
   },
   {
     name: "register",
     path: "/register",
-    component: RegisterPage,
+    component: () => import("@/pages/Register/index.vue"),
   },
   // 重定向，在项目跑起来的时候，访问/，立马定向到首页
   {

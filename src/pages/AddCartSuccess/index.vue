@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     getSaleAttrValue(list) {
-      return list.filter((v) => v.isChecked === "1")[0].saleAttrValueName;
+      return list.filter((v) => v.isChecked === "1")[0].saleAttrValueName || "";
     },
   },
 };

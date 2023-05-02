@@ -13,7 +13,7 @@
       <div class="item-msg">{{ cart.skuName }}</div>
     </li>
     <li class="cart-list-con3">
-      <span class="price">{{ cart.skuPrice.toFixed(2) }}</span>
+      <span class="price">{{ cart.cartPrice.toFixed(2) }}</span>
     </li>
     <li class="cart-list-con4">
       <a class="mins" @click="num > 1 ? num-- : ''">-</a>
@@ -27,7 +27,7 @@
       <a class="plus" @click="num++">+</a>
     </li>
     <li class="cart-list-con5">
-      <span class="sum">{{ cart.skuNum * cart.skuPrice }}</span>
+      <span class="sum">{{ cart.skuNum * cart.cartPrice }}</span>
     </li>
     <li class="cart-list-con6">
       <a class="sindelet" @click="deleteCart">删除</a>

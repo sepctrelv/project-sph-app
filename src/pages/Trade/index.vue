@@ -41,18 +41,18 @@
           v-for="order in orderInfo.detailArrayList"
           :key="order.skuId"
         >
-          <li>
+          <li class="list-img">
             <img :src="order.imgUrl" alt="" />
           </li>
-          <li>
+          <li class="list-name">
             <p>{{ order.skuName }}</p>
             <h4>7天无理由退货</h4>
           </li>
-          <li>
+          <li class="list-price">
             <h3>￥{{ order.orderPrice }}</h3>
           </li>
-          <li>X{{ order.skuNum }}</li>
-          <li>有货</li>
+          <li class="list-num">X{{ order.skuNum }}</li>
+          <li class="list-status">有货</li>
         </ul>
       </div>
       <div class="bbs">
@@ -296,15 +296,27 @@ export default {
 
       .list {
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
 
-        li {
-          line-height: 30px;
+        & + .list {
+          margin-top: 16px;
+        }
+
+        &-img {
+          flex-basis: 100px;
+          height: 100px;
+          overflow: hidden;
 
           img {
-            width: 100px;
-            height: 100px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
           }
+        }
+
+        &-name {
+          flex-grow: 1;
 
           p {
             margin-bottom: 20px;
@@ -314,10 +326,18 @@ export default {
             color: #c81623;
             font-weight: 400;
           }
+        }
 
-          h3 {
-            color: #e12228;
-          }
+        &-price,
+        &-num,
+        &-status {
+          flex-basis: 150px;
+          flex-shrink: 0;
+          text-align: center;
+        }
+
+        &-price {
+          color: #e12228;
         }
       }
     }

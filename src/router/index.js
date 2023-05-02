@@ -87,7 +87,12 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
-    next();
+    let toPath = to.path;
+    if (["/pay", "/trade", "/center"].some((route) => toPath.includes(route))) {
+      next(`/login?redirect=${toPath}`);
+    } else {
+      next();
+    }
   }
 });
 

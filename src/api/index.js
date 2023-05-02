@@ -100,3 +100,8 @@ export const reqGetPaymentInfo = (orderId) => {
 export const reqGetPaymentStatus = (orderId) => {
   return service.get(`/payment/weixin/queryPayStatus/${orderId}`);
 };
+
+// 获取我的订单列表
+export const reqGetMyOrderList = (page, limit) => {
+  return service.get(`/order/auth/${page}/${limit}`);
+};

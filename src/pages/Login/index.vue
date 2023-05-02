@@ -91,7 +91,8 @@ export default {
         const { phone, password } = this;
         if (phone && password) {
           await this.$store.dispatch("user/userLogin", { phone, password });
-          await this.$router.push("/");
+          let toPath = this.$route.query.redirect || "/";
+          await this.$router.push(toPath);
         } else {
           await Promise.reject(new Error("请输入用户名和密码！"));
         }

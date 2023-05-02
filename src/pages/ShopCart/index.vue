@@ -79,7 +79,6 @@ export default {
   },
   methods: {
     getShopCartDate() {
-      console.log(123);
       this.$store.dispatch("shopcart/getCartList");
     },
     async deleteAllCheckedCart() {
